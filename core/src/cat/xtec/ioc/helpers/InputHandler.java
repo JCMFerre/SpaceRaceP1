@@ -18,55 +18,37 @@ public class InputHandler implements InputProcessor {
     private Spacecraft spacecraft;
     private GameScreen screen;
     private Vector2 stageCoord;
+    private int dificultat;
 
     private Stage stage;
 
-    public InputHandler(GameScreen screen) {
-
-        // Obtenim tots els elements necessaris
+    public InputHandler(GameScreen screen, int dificultat) {
         this.screen = screen;
         spacecraft = screen.getSpacecraft();
         stage = screen.getStage();
-
+        this.dificultat = dificultat;
     }
 
     @Override
     public boolean keyDown(int keycode) {
-        if (keycode == Input.Keys.UP && keycode != Input.Keys.DOWN)
-        {
+        if (keycode == Input.Keys.UP && keycode != Input.Keys.DOWN) {
             spacecraft.goUp();
-            return true;
-        }
-        else if (keycode == Input.Keys.DOWN && keycode != Input.Keys.UP)
-        {
+        } else if (keycode == Input.Keys.DOWN && keycode != Input.Keys.UP) {
             spacecraft.goDown();
-            return true;
-        }
-        else if (keycode == Input.Keys.RIGHT && keycode != Input.Keys.LEFT)
-        {
+        } else if (keycode == Input.Keys.RIGHT && keycode != Input.Keys.LEFT) {
             spacecraft.goStraight();
-            return true;
-        }
-        else if (keycode == Input.Keys.LEFT && keycode != Input.Keys.RIGHT)
-        {
+        } else if (keycode == Input.Keys.LEFT && keycode != Input.Keys.RIGHT) {
             spacecraft.goBack();
-            return true;
-        }
-
-        else
-        {
+        } else {
             spacecraft.pause();
-            return true;
         }
-
-
-
+        return true;
     }
 
     @Override
     public boolean keyUp(int keycode) {
-        spacecraft.pause();
-        return true;
+        //spacecraft.pause();
+        return false;
     }
 
     @Override
@@ -77,7 +59,6 @@ public class InputHandler implements InputProcessor {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         previousY = screenY;
-
         stageCoord = stage.screenToStageCoordinates(new Vector2(screenX, screenY));
         Actor actorHit = stage.hit(stageCoord.x, stageCoord.y, true);
         if (actorHit != null)
@@ -87,9 +68,6 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-
-        // Quan deixem anar el dit acabem un moviment
-        // i posem la nau en l'estat normal
         spacecraft.goStraight();
         return true;
     }

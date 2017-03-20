@@ -38,14 +38,12 @@ public class Spacecraft extends Actor {
         velocityY = 0;
 
 
-
-
         // Creem el rectangle de col·lisions
         collisionRect = new Rectangle();
 
         // Per a la gestio de hit
-     //   setBounds(position.x, position.y, width, height);
-      //  setTouchable(Touchable.enabled);
+        //   setBounds(position.x, position.y, width, height);
+        //  setTouchable(Touchable.enabled);
 
         // Rotacio
 
@@ -64,7 +62,7 @@ public class Spacecraft extends Actor {
         // Equivalent:
         // this.addAction(Actions.repeat(RepeatAction.FOREVER, Actions.rotateBy(-90f, 0.2f)));
 
-       // this.addAction(rotateAction);
+        // this.addAction(rotateAction);
 
         // Inicialitzem la spacecraft a l'estat normal
 
@@ -77,15 +75,13 @@ public class Spacecraft extends Actor {
 
         super.act(delta);
 
-        if (position.x + velocityX*delta <= Settings.GAME_WIDTH - this.width && position.x + velocityX * delta>=0)
-        {
-            this.position.x += velocityX*delta;
+        if (position.x + velocityX * delta <= Settings.GAME_WIDTH - this.width && position.x + velocityX * delta >= 0) {
+            this.position.x += velocityX * delta;
 
         }
         if (this.position.y + height + velocityY * delta <= Settings.GAME_HEIGHT &&
-                this.position.y + velocityY*delta >0)
-        {
-            this.position.y += velocityY*delta;
+                this.position.y + velocityY * delta > 0) {
+            this.position.y += velocityY * delta;
         }
         /*
         // Movem la spacecraft depenent de la direcció controlant que no surti de la pantalla
@@ -109,8 +105,8 @@ public class Spacecraft extends Actor {
         }
         */
 
-       collisionRect.set(position.x, position.y + 3, width, 10);
-      //  setBounds(position.x, position.y, width, height);
+        collisionRect.set(position.x, position.y + 3, width, 10);
+        //  setBounds(position.x, position.y, width, height);
 
     }
 
@@ -150,15 +146,12 @@ public class Spacecraft extends Actor {
         velocityX = Settings.SPACECRAFT_VELOCITY_X;
     }
 
-    public void goBack()
-    {
+    public void goBack() {
         direction = SPACECRAFT_STRAIGHT;
-        velocityX = - Settings.SPACECRAFT_VELOCITY_X;
-
+        velocityX = -Settings.SPACECRAFT_VELOCITY_X;
     }
-    public void pause()
 
-    {
+    public void pause() {
         velocityX = 0;
         velocityY = 0;
         direction = SPACECRAFT_STRAIGHT;
@@ -166,9 +159,7 @@ public class Spacecraft extends Actor {
 
     // Obtenim el TextureRegion depenent de la posició de la spacecraft
     public TextureRegion getSpacecraftTexture() {
-
         switch (direction) {
-
             case SPACECRAFT_STRAIGHT:
                 return AssetManager.spacecraft;
             case SPACECRAFT_UP:
@@ -179,23 +170,23 @@ public class Spacecraft extends Actor {
                 return AssetManager.spacecraft;
         }
     }
+
     @Override
-    public float getOriginX ()
-    {
-        return  position.x + width/2;
+    public float getOriginX() {
+        return position.x + width / 2;
     }
+
     @Override
-    public float getOriginY()
-    {
-        return  position.y + height/2;
+    public float getOriginY() {
+        return position.y + height / 2;
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         batch.draw(getSpacecraftTexture(), position.x, position.y, width, height);
-      // batch.draw(getSpacecraftTexture(), position.x, position.y, 0,0, width, height, getScaleX(), getScaleY(), getRotation());
-      //  Gdx.app.log("Rotació", Double.toString(getRotation()));
+        // batch.draw(getSpacecraftTexture(), position.x, position.y, 0,0, width, height, getScaleX(), getScaleY(), getRotation());
+        //  Gdx.app.log("Rotació", Double.toString(getRotation()));
 
     }
 
@@ -204,10 +195,11 @@ public class Spacecraft extends Actor {
         float angle;
         if (velocityX == 0) angle = 0;
         else
-        angle = (float) -Math.atan(velocityY/velocityX);
+            angle = (float) -Math.atan(velocityY / velocityX);
         return angle;
 
     }
+
     public Rectangle getCollisionRect() {
         return collisionRect;
     }

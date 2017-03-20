@@ -20,6 +20,7 @@ public class ScrollHandler extends Group {
 
     // Objecte Random
     Random r;
+    private int puntuacion;
 
     public ScrollHandler() {
 
@@ -78,6 +79,7 @@ public class ScrollHandler extends Group {
 
             Asteroid asteroid = asteroids.get(i);
             if (asteroid.isLeftOfScreen()) {
+                puntuacion += asteroid.getWidth() / Settings.MIN_ASTEROID;
                 if (i == 0) {
                     asteroid.reset(asteroids.get(asteroids.size() - 1).getTailX() + Settings.ASTEROID_GAP);
                 } else {
@@ -103,4 +105,11 @@ public class ScrollHandler extends Group {
         return asteroids;
     }
 
+    public void setPuntuacion(int puntuacion) {
+        this.puntuacion = puntuacion;
+    }
+
+    public int getPuntuacion() {
+        return puntuacion;
+    }
 }

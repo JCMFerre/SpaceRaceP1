@@ -34,6 +34,8 @@ public class AssetManager {
 
     public static TextureRegion ajustes;
 
+    public static TextureRegion gasolina;
+
     public static void load() {
         // Carreguem les textures i li apliquem el mètode d'escalat 'nearest'
         sheet = new Texture(Gdx.files.internal("sheet.png"));
@@ -102,6 +104,8 @@ public class AssetManager {
         ajustes = new TextureRegion(sheet, 514, 280, 30, 30);
         ajustes.flip(false, true);
 
+        gasolina = new TextureRegion(sheet, 481, 285, 27, 27);
+        gasolina.flip(false, true);
     }
 
     public static void dispose() {

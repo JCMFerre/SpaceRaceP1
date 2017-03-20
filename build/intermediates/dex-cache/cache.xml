@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="D:\Proyectos\AndroidStudioProjects\SpaceRaceP1\core\build\libs\core-1.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="a7631c899bbfea393090097349d1b6e83af9d5f6">
+        <dex dex="D:\Proyectos\AndroidStudioProjects\SpaceRaceP1\android\build\intermediates\pre-dexed\debug\core-1.0_0c5998e03688a7f4a42a92615af363742276efd5.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\nrpc\.gradle\caches\modules-2\files-2.1\com.badlogicgames.gdx\gdx\1.6.3\f5848caaa3edeedce92361c61c716a1cb33587f\gdx-1.6.3.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="0f5848caaa3edeedce92361c61c716a1cb33587f">
+        <dex dex="D:\Proyectos\AndroidStudioProjects\SpaceRaceP1\android\build\intermediates\pre-dexed\debug\gdx-1.6.3_f096da96e38981327950877b4b35ad38f0c6a807.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\nrpc\.gradle\caches\modules-2\files-2.1\com.badlogicgames.gdx\gdx-box2d\1.6.3\82ff2ee784275ae5f49ac942a593c5248b80881b\gdx-box2d-1.6.3.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="82ff2ee784275ae5f49ac942a593c5248b80881b">
+        <dex dex="D:\Proyectos\AndroidStudioProjects\SpaceRaceP1\android\build\intermediates\pre-dexed\debug\gdx-box2d-1.6.3_07dc92bf62ce658333ee949b36180b10bf8f17e6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\nrpc\.gradle\caches\modules-2\files-2.1\com.badlogicgames.gdx\gdx-backend-android\1.6.3\78054a81e63d50b73e0cb00e4ba01bb54f9be94f\gdx-backend-android-1.6.3.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="78054a81e63d50b73e0cb00e4ba01bb54f9be94f">
+        <dex dex="D:\Proyectos\AndroidStudioProjects\SpaceRaceP1\android\build\intermediates\pre-dexed\debug\gdx-backend-android-1.6.3_4a24badabf2693b19944556810831de9db858482.jar" />
+    </item>
+
+</items>

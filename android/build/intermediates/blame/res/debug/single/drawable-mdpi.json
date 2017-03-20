@@ -1,9 +1,5 @@
 [
     {
-        "merged": "D:\\Proyectos\\AndroidStudioProjects\\SpaceRaceP1\\android\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\ic_launcher.png",
-        "source": "D:\\Proyectos\\AndroidStudioProjects\\SpaceRaceP1\\android\\res\\drawable-mdpi\\ic_launcher.png"
-    },
-    {
         "merged": "C:\\JCM\\Projects\\AndroidStudio\\SpaceRaceP1\\android\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\ic_launcher.png",
         "source": "C:\\JCM\\Projects\\AndroidStudio\\SpaceRaceP1\\android\\res\\drawable-mdpi\\ic_launcher.png"
     }

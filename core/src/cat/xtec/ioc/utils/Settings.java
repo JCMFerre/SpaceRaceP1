@@ -23,4 +23,5 @@ public class Settings {
     public static final int ASTEROID_GAP = 75;
     public static final int BG_SPEED = -100;
 
+    public static final int GASOLINE_SPEED = -200;
 }

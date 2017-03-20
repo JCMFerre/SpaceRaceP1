@@ -13,9 +13,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 
+import java.util.Random;
+
 import cat.xtec.ioc.SpaceRace;
 import cat.xtec.ioc.helpers.AssetManager;
 import cat.xtec.ioc.helpers.InputHandler;
+import cat.xtec.ioc.objects.Gasolina;
 import cat.xtec.ioc.objects.ScrollHandler;
 import cat.xtec.ioc.objects.Spacecraft;
 import cat.xtec.ioc.utils.Settings;
@@ -29,6 +32,7 @@ public class GameScreen implements Screen {
     private ScrollHandler scrollHandler;
     private ShapeRenderer shapeRenderer;
     private Batch batch;
+    private Gasolina gasolina;
 
     private boolean animacionDesactivada;
 
@@ -37,9 +41,15 @@ public class GameScreen implements Screen {
 
     private float explosionTime = 0;
 
+    private Random random;
     private int recordActual;
     private int puntuacion;
     private int dificultad;
+
+    private Label labelVida;
+    private Container<Label> contenedorVida;
+
+    private int vida;
 
     public GameScreen(SpaceRace game, int dificultad) {
         this.game = game;
@@ -64,7 +74,18 @@ public class GameScreen implements Screen {
         contenedorPuntuacion.setPosition(Settings.GAME_WIDTH / 2, labelPuntuacion.getHeight());
         contenedorPuntuacion.setName("contenedorPuntuacion");
         contenedorPuntuacion.setTransform(true);
+        vida = 100;
+        random = new Random();
+        gasolina = crearInstanciaGasolina();
+        stage.addActor(gasolina);
+        labelVida = new Label("Vida: " + vida, new Label.LabelStyle(AssetManager.font, null));
+        labelVida.setFontScale(0.27f);
+        contenedorVida = new Container<Label>(labelVida);
+        contenedorVida.center();
+        contenedorVida.setPosition(Settings.GAME_WIDTH / 2, Settings.GAME_HEIGHT - labelVida.getHeight());
+        contenedorVida.setTransform(true);
         stage.addActor(contenedorPuntuacion);
+        stage.addActor(contenedorVida);
         Gdx.input.setInputProcessor(new InputHandler(this, dificultad));
     }
 
@@ -79,6 +100,25 @@ public class GameScreen implements Screen {
         stage.act(delta);
         puntuacion = scrollHandler.getPuntuacion();
         labelPuntuacion.setText("Puntuacion: " + puntuacion);
+        if (gasolina.collides(spacecraft)) {
+            anadirGasolinaStage();
+            vida += random.nextInt(21);
+            vida = vida > 100 ? 100 : vida;
+        } else if (gasolina.getPosition().x + gasolina.getWidthBuena() < 0) {
+            vida -= random.nextInt(21);
+            vida = vida <= 0 ? 0 : vida;
+            anadirGasolinaStage();
+        }
+        labelVida.setText("Vida: " + vida);
+        if (vida <= 0) {
+            lanzarScreenPuntuaciones();
+        } else if (vida < 25 && !contenedorVida.hasActions()) {
+            contenedorVida.addAction(Actions.repeat(RepeatAction.FOREVER,
+                    Actions.sequence(Actions.scaleTo(1.25f, 1.25f, 1),
+                            Actions.scaleTo(1, 1, 1))));
+        } else {
+            contenedorVida.clearActions();
+        }
         if (!gameOver) {
             if (scrollHandler.collides(spacecraft)) {
                 AssetManager.explosionSound.play();
@@ -94,7 +134,7 @@ public class GameScreen implements Screen {
                 recordActual = puntuacion;
                 guardarPuntuacionPrefs(puntuacion);
             }
-            asteroideColisionado();
+            lanzarScreenPuntuaciones();
         }
         if (animacionDesactivada && puntuacion > recordActual) {
             contenedorPuntuacion.addAction(Actions.repeat(RepeatAction.FOREVER,
@@ -102,6 +142,17 @@ public class GameScreen implements Screen {
                             Actions.scaleTo(1, 1, 1))));
             animacionDesactivada = false;
         }
+    }
+
+    private void anadirGasolinaStage() {
+        gasolina.remove();
+        gasolina = crearInstanciaGasolina();
+        stage.addActor(gasolina);
+    }
+
+    private Gasolina crearInstanciaGasolina() {
+        int h = random.nextInt(Settings.GAME_HEIGHT - 27);
+        return new Gasolina(Settings.GAME_WIDTH + 27, h, 27, 27);
     }
 
     private void guardarPuntuacionPrefs(int puntuacion) {
@@ -114,7 +165,7 @@ public class GameScreen implements Screen {
         return Gdx.app.getPreferences("preferencias").getInteger("recordPuntuacion_" + dificultad, -33);
     }
 
-    private void asteroideColisionado() {
+    private void lanzarScreenPuntuaciones() {
         game.setScreen(new PuntuacionScreen(game, recordActual, puntuacion, dificultad));
     }
 

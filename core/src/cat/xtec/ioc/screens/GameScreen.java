@@ -39,17 +39,18 @@ public class GameScreen implements Screen {
 
     private int recordActual;
     private int puntuacion;
+    private int dificultad;
 
-    public GameScreen(SpaceRace game, int dificultat) {
-        Gdx.app.log("difGame", "" + dificultat);
+    public GameScreen(SpaceRace game, int dificultad) {
         this.game = game;
+        this.dificultad = dificultad;
         shapeRenderer = new ShapeRenderer();
         OrthographicCamera camera = new OrthographicCamera(Settings.GAME_WIDTH, Settings.GAME_HEIGHT);
         camera.setToOrtho(true);
         StretchViewport viewport = new StretchViewport(Settings.GAME_WIDTH, Settings.GAME_HEIGHT, camera);
         stage = new Stage(viewport);
         batch = stage.getBatch();
-        spacecraft = new Spacecraft(Settings.SPACECRAFT_STARTX, Settings.SPACECRAFT_STARTY, Settings.SPACECRAFT_WIDTH, Settings.SPACECRAFT_HEIGHT);
+        spacecraft = new Spacecraft(Settings.SPACECRAFT_STARTX, Settings.SPACECRAFT_STARTY, Settings.SPACECRAFT_WIDTH, Settings.SPACECRAFT_HEIGHT, dificultad);
         scrollHandler = new ScrollHandler();
         stage.addActor(scrollHandler);
         stage.addActor(spacecraft);
@@ -64,8 +65,7 @@ public class GameScreen implements Screen {
         contenedorPuntuacion.setName("contenedorPuntuacion");
         contenedorPuntuacion.setTransform(true);
         stage.addActor(contenedorPuntuacion);
-        Gdx.app.log("record", recordActual + "");
-        Gdx.input.setInputProcessor(new InputHandler(this, dificultat));
+        Gdx.input.setInputProcessor(new InputHandler(this, dificultad));
     }
 
     @Override
@@ -106,42 +106,38 @@ public class GameScreen implements Screen {
 
     private void guardarPuntuacionPrefs(int puntuacion) {
         Preferences preferences = Gdx.app.getPreferences("preferencias");
-        preferences.putInteger("recordPuntuacion", puntuacion);
+        preferences.putInteger("recordPuntuacion_" + dificultad, puntuacion);
         preferences.flush();
     }
 
     private int obtenerRecordActualPrefs() {
-        return Gdx.app.getPreferences("preferencias").getInteger("recordPuntuacion", -33);
+        return Gdx.app.getPreferences("preferencias").getInteger("recordPuntuacion_" + dificultad, -33);
     }
 
     private void asteroideColisionado() {
-        game.setScreen(new PuntuacionScreen(game, recordActual, puntuacion));
+        game.setScreen(new PuntuacionScreen(game, recordActual, puntuacion, dificultad));
     }
 
 
     @Override
     public void resize(int width, int height) {
-
     }
 
     @Override
     public void pause() {
-
     }
 
     @Override
     public void resume() {
-
     }
 
     @Override
     public void hide() {
-
     }
 
     @Override
     public void dispose() {
-
+        game.dispose();
     }
 
     public Spacecraft getSpacecraft() {

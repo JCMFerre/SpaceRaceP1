@@ -75,7 +75,7 @@ public class DificultatScreen extends ChangeListener implements Screen {
     public void changed(ChangeEvent event, Actor actor) {
         int dificultad = Integer.parseInt(actor.getName());
         guardarDificultatPreferencias(dificultad);
-        Gdx.app.log("dif", "" + dificultad);
+        //Gdx.app.log("dif", "" + dificultad);
         game.setScreen(new GameScreen(game, dificultad));
     }
 
@@ -114,6 +114,7 @@ public class DificultatScreen extends ChangeListener implements Screen {
 
     @Override
     public void dispose() {
+        game.dispose();
     }
 
 }

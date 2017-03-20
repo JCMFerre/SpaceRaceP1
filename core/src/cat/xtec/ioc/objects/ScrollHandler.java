@@ -94,7 +94,6 @@ public class ScrollHandler extends Group {
         // Comprovem les col·lisions entre cada asteroid i la nau
         for (Asteroid asteroid : asteroids) {
             if (asteroid.collides(nau)) {
-                Gdx.app.log("Colision", "Vas a Morir");
                 return true;
             }
         }

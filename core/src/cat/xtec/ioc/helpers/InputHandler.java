@@ -47,7 +47,7 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean keyUp(int keycode) {
-        //spacecraft.pause();
+        spacecraft.pause();
         return false;
     }
 

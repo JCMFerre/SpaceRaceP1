@@ -23,23 +23,23 @@ public class PuntuacionScreen implements Screen {
     private SpaceRace game;
     private Stage stage;
 
-    public PuntuacionScreen(SpaceRace game, int recordActual, int puntuacion) {
+    public PuntuacionScreen(SpaceRace game, int recordActual, int puntuacion, int dificultad) {
         this.game = game;
         OrthographicCamera camera = new OrthographicCamera(Settings.GAME_WIDTH, Settings.GAME_HEIGHT);
         camera.setToOrtho(true);
         StretchViewport viewport = new StretchViewport(Settings.GAME_WIDTH, Settings.GAME_HEIGHT, camera);
         stage = new Stage(viewport);
         stage.addActor(new Image(AssetManager.background));
-        cargarLabels(recordActual, puntuacion);
+        cargarLabels(recordActual, puntuacion, dificultad);
         Gdx.input.setInputProcessor(stage);
     }
 
-    private void cargarLabels(int recordActual, int puntuacion) {
-        Label labelRecord = new Label("Record actual: " + recordActual, new Label.LabelStyle(AssetManager.font, null));
+    private void cargarLabels(int recordActual, int puntuacion, int dificultad) {
+        Label labelRecord = new Label("Record actual (" + (dificultad == 1 ? "F" : dificultad == 2 ? "M" : "D") + "): " + recordActual, new Label.LabelStyle(AssetManager.font, null));
         Label labelPuntuacion = new Label("Tu puntuacion: " + puntuacion, new Label.LabelStyle(AssetManager.font, null));
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.font = AssetManager.font;
-        TextButton butonClick = new TextButton("Pulsa para volver a jugar", textButtonStyle);
+        TextButton butonClick = new TextButton("Pulsa aqui para volver a jugar", textButtonStyle);
         butonClick.getLabel().setFontScale(0.25f);
         butonClick.setPosition(Settings.GAME_WIDTH / 2 - butonClick.getWidth() / 2,
                 Settings.GAME_HEIGHT * 0.75f - butonClick.getHeight() / 2);
@@ -49,9 +49,6 @@ public class PuntuacionScreen implements Screen {
                 game.setScreen(new GameScreen(game, obtenerDificultatPrefs()));
             }
         });
-
-        /*Label labelInfoClick = new Label("Pulsa para volver a jugar", new Label.LabelStyle(AssetManager.font, null));
-        labelInfoClick.setFontScale(0.30f);*/
 
         Container<Label> contenedorRecord = new Container<Label>(labelRecord);
         contenedorRecord.setPosition(Settings.GAME_WIDTH / 2, Settings.GAME_HEIGHT * 0.25f);
@@ -65,24 +62,15 @@ public class PuntuacionScreen implements Screen {
                             Actions.scaleTo(1, 1, 1))));
         }
 
-        /*Container<Label> contenedorInfoClick = new Container<Label>(labelInfoClick);
-        contenedorInfoClick.setPosition(Settings.GAME_WIDTH / 2, Settings.GAME_HEIGHT * 0.75f);
-
-        contenedorInfoClick.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-            }
-        });*/
         stage.addActor(contenedorRecord);
         stage.addActor(contenedorPuntuacion);
-        //stage.addActor(contenedorInfoClick);
 
         stage.addActor(butonClick);
 
         Image ajustes = new Image(AssetManager.ajustes);
         ajustes.setWidth(16f);
         ajustes.setHeight(16f);
-        // ajustes.setScale(20f, 20f);
+
         ajustes.setPosition(Settings.GAME_WIDTH - ajustes.getWidth() - 4, 4f);
         TextButton settings = new TextButton("", textButtonStyle);
         settings.setWidth(ajustes.getWidth());
@@ -102,16 +90,12 @@ public class PuntuacionScreen implements Screen {
 
     @Override
     public void show() {
-
     }
 
     @Override
     public void render(float delta) {
         stage.draw();
         stage.act(delta);
-        /*if (Gdx.input.isTouched()) {
-           game.setScreen(new GameScreen(game, obtenerDificultatPrefs()));
-        }*/
     }
 
     private int obtenerDificultatPrefs() {
@@ -120,26 +104,22 @@ public class PuntuacionScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
     }
 
     @Override
     public void pause() {
-
     }
 
     @Override
     public void resume() {
-
     }
 
     @Override
     public void hide() {
-
     }
 
     @Override
     public void dispose() {
-
+        game.dispose();
     }
 }
